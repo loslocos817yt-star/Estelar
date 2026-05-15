@@ -5,46 +5,285 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ESTELAR - PattitexTEC</title>
 <style>
-@font-face{font-family:MiFuenteCustom;src:url('./asset/fuente.ttf') format('truetype');}
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}
-body{
-  background:#000;color:#fff;font-family:MiFuenteCustom,Arial,Helvetica,sans-serif;
-  -webkit-tap-highlight-color:transparent;
-  user-select:none; overflow:hidden;
+@font-face {
+  font-family: MiFuenteCustom;
+  src: url('./asset/fuente.ttf') format('truetype');
 }
-#transition-layer{position:fixed;inset:0;background:#000;z-index:1200;pointer-events:none;opacity:0;transition:opacity .7s ease;}
-.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center}
-#menu-screen{display:flex;z-index:10}
-#game-screen{z-index:5}
-h1{font-size:3.4rem;color:#00ffcc;text-shadow:0 0 18px #00ffcc;margin-bottom:18px;text-align:center;}
-.btn-main{margin-top:14px;padding:16px 56px;font-size:1.2rem;border-radius:50px;border:3px solid #00ffcc;color:#00ffcc;background:rgba(0,255,204,0.06);cursor:pointer;box-shadow:0 0 12px rgba(0,255,204,0.18);transition:transform .12s,background .12s,color .12s;pointer-events:auto;}
-.btn-main:active{transform:scale(.96);background:#00ffcc;color:#000}
-#ui{position:absolute;top:18px;width:100%;display:flex;justify-content:space-between;padding:0 22px;z-index:60;pointer-events:none;align-items:center}
-#score{font-size:26px;color:#00ffcc;pointer-events:none;font-weight:bold;}
-.ui-controls{display:flex;gap:10px;align-items:center;pointer-events:auto}
-.small-btn{padding:8px 12px;border-radius:12px;border:2px solid #00ffcc;background:rgba(0,255,204,0.06);color:#00ffcc;cursor:pointer;font-size:14px}
-#overlay-menu{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:200;}
-#overlay-menu h2{font-size:2.6rem;margin-bottom:18px;text-align:center;}
-#overlay-menu .btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-#game-canvas{display:block;width:100%;height:100%;background:linear-gradient(180deg,#000011 0%,#000000 100%);}
-.controls{position:absolute;bottom:26px;width:100%;display:flex;justify-content:space-around;z-index:60;pointer-events:none}
-.ctrl-btn{width:86px;height:86px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid #00ffcc;background:rgba(0,255,204,0.06);color:#00ffcc;font-size:34px;pointer-events:auto;user-select:none;}
-.ctrl-btn:active{background:rgba(0,255,204,0.3);}
-#menu-stars{position:absolute;inset:0;z-index:-1;}
-#general-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);z-index:1000}
-.general-card{width:min(760px,94%);max-width:760px;background:linear-gradient(180deg,#080808,#0f0f0f);border-radius:14px;padding:18px;border:2px solid rgba(0,255,204,0.1);box-shadow:0 10px 40px rgba(0,0,0,0.6);color:#eafff5}
-.general-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
-.general-header h3{color:#00ffd0;margin:0}
-.meta-row{display:flex;gap:12px;align-items:center;margin-top:12px}
-.small-info{font-size:.92rem;color:#cfeee6}
-.tiktok-badge{display:flex;gap:8px;align-items:center;font-size:.95rem}
-@media (max-width:520px){
-  h1{font-size:2.4rem}
-  .btn-main{padding:12px 42px;font-size:1rem}
-  .ctrl-btn{width:68px;height:68px;font-size:26px}
-  .general-card{padding:14px}
-  .general-header{flex-direction:column;align-items:flex-start;}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: MiFuenteCustom, Arial, Helvetica, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overflow: hidden;
+}
+
+#transition-layer {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 1200;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#menu-screen {
+  display: flex;
+  z-index: 10;
+}
+
+#game-screen {
+  z-index: 5;
+}
+
+h1 {
+  font-size: 3.4rem;
+  color: #00ffcc;
+  text-shadow: 0 0 18px #00ffcc;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.btn-main {
+  margin-top: 14px;
+  padding: 16px 56px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  border: 3px solid #00ffcc;
+  color: #00ffcc;
+  background: rgba(0,255,204,0.06);
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0,255,204,0.18);
+  transition: transform .12s, background .12s, color .12s;
+  pointer-events: auto;
+}
+
+.btn-main:active {
+  transform: scale(.96);
+  background: #00ffcc;
+  color: #000;
+}
+
+#ui {
+  position: absolute;
+  top: 18px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 22px;
+  z-index: 60;
+  pointer-events: none;
+  align-items: center;
+}
+
+#score {
+  font-size: 26px;
+  color: #00ffcc;
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.ui-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.small-btn {
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 2px solid #00ffcc;
+  background: rgba(0,255,204,0.06);
+  color: #00ffcc;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#overlay-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+#overlay-menu h2 {
+  font-size: 2.6rem;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+#overlay-menu .btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg,#000011 0%,#000000 100%);
+}
+
+.controls {
+  position: absolute;
+  bottom: 26px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.ctrl-btn {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #00ffcc;
+  background: rgba(0,255,204,0.06);
+  color: #00ffcc;
+  font-size: 34px;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.ctrl-btn:active {
+  background: rgba(0,255,204,0.3);
+}
+
+#menu-stars {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+#ad-container {
+  margin-top: 18px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+}
+
+#ad-frame {
+  border: 0;
+  padding: 0;
+  width: min(320px, 90%);
+  height: 50px;
+  overflow: hidden;
+  display: block;
+  border-radius: 12px;
+}
+
+#general-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+}
+
+.general-card {
+  width: min(760px, 94%);
+  max-width: 760px;
+  background: linear-gradient(180deg,#080808,#0f0f0f);
+  border-radius: 14px;
+  padding: 18px;
+  border: 2px solid rgba(0,255,204,0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  color: #eafff5;
+}
+
+.general-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.general-header h3 {
+  color: #00ffd0;
+  margin: 0;
+}
+
+.meta-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.small-info {
+  font-size: .92rem;
+  color: #cfeee6;
+}
+
+.tiktok-badge {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: .95rem;
+}
+
+@media (max-width:520px) {
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  .btn-main {
+    padding: 12px 42px;
+    font-size: 1rem;
+  }
+
+  .ctrl-btn {
+    width: 68px;
+    height: 68px;
+    font-size: 26px;
+  }
+
+  .general-card {
+    padding: 14px;
+  }
+
+  .general-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>
 </head>
@@ -54,9 +293,20 @@ h1{font-size:3.4rem;color:#00ffcc;text-shadow:0 0 18px #00ffcc;margin-bottom:18p
 
 <div id="menu-screen" class="screen" aria-label="menu principal">
   <canvas id="menu-stars"></canvas>
+
   <h1>ESTELAR</h1>
 
   <button class="btn-main" onclick="startToGame()">JUGAR</button>
+
+  <div id="ad-container" aria-label="anuncio">
+    <!-- BEGIN AADS AD UNIT 2437701 -->
+    <iframe
+      id="ad-frame"
+      data-aa='2437701'
+      src='//acceptable.a-ads.com/2437701/?size=Adaptive'>
+    </iframe>
+    <!-- END AADS AD UNIT 2437701 -->
+  </div>
 
   <button class="btn-main" style="margin-top:16px;font-size:1rem;padding:12px 40px" onclick="showGeneral()">
     GENERAL
@@ -139,26 +389,38 @@ h1{font-size:3.4rem;color:#00ffcc;text-shadow:0 0 18px #00ffcc;margin-bottom:18p
    --------------------------- */
 const menuMusic = new Audio('asset/music/menu.mp3');
 const gameMusic = new Audio('asset/music/game.mp3');
-menuMusic.loop = true; gameMusic.loop = true;
-window.addEventListener('load', ()=>{ menuMusic.play().catch(()=>{}); });
+menuMusic.loop = true;
+gameMusic.loop = true;
+window.addEventListener('load', () => {
+  menuMusic.play().catch(() => {});
+});
 
-function fadeAudio(outAudio, inAudio){
-  try{
+function fadeAudio(outAudio, inAudio) {
+  try {
     let ov = outAudio.volume ?? 1;
-    const fo = setInterval(()=>{
+    const fo = setInterval(() => {
       ov -= 0.06;
-      if(ov <= 0.05){ outAudio.pause(); outAudio.volume = 1; clearInterval(fo); }
-      else outAudio.volume = Math.max(0,ov);
+      if (ov <= 0.05) {
+        outAudio.pause();
+        outAudio.volume = 1;
+        clearInterval(fo);
+      } else {
+        outAudio.volume = Math.max(0, ov);
+      }
     }, 60);
+
     inAudio.volume = 0;
-    inAudio.play().catch(()=>{});
+    inAudio.play().catch(() => {});
+
     let iv = 0;
-    const fi = setInterval(()=>{
+    const fi = setInterval(() => {
       iv += 0.06;
       inAudio.volume = Math.min(0.6, iv);
-      if(iv >= 0.6) clearInterval(fi);
+      if (iv >= 0.6) {
+        clearInterval(fi);
+      }
     }, 80);
-  }catch(e){}
+  } catch (e) {}
 }
 
 /* ---------------------------
@@ -166,21 +428,37 @@ function fadeAudio(outAudio, inAudio){
    --------------------------- */
 const ms = document.getElementById('menu-stars');
 const mctx = ms.getContext('2d');
-function resizeMenuStars(){ ms.width = window.innerWidth; ms.height = window.innerHeight; }
+
+function resizeMenuStars() {
+  ms.width = window.innerWidth;
+  ms.height = window.innerHeight;
+}
+
 resizeMenuStars();
-let mStars = Array.from({length:120}, ()=>({x:Math.random()*ms.width,y:Math.random()*ms.height,s:Math.random()*2+0.4,v:Math.random()*0.6+0.2}));
-function menuAnim(){
-  if(document.getElementById('menu-screen').style.display !== 'none'){
-    mctx.clearRect(0,0,ms.width,ms.height);
+
+let mStars = Array.from({ length: 120 }, () => ({
+  x: Math.random() * ms.width,
+  y: Math.random() * ms.height,
+  s: Math.random() * 2 + 0.4,
+  v: Math.random() * 0.6 + 0.2
+}));
+
+function menuAnim() {
+  if (document.getElementById('menu-screen').style.display !== 'none') {
+    mctx.clearRect(0, 0, ms.width, ms.height);
     mctx.fillStyle = '#fff';
-    mStars.forEach(s=>{
+    mStars.forEach(s => {
       mctx.fillRect(s.x, s.y, s.s, s.s);
       s.y += s.v;
-      if(s.y > ms.height){ s.y = -5; s.x = Math.random()*ms.width; }
+      if (s.y > ms.height) {
+        s.y = -5;
+        s.x = Math.random() * ms.width;
+      }
     });
   }
   requestAnimationFrame(menuAnim);
 }
+
 menuAnim();
 
 /* ---------------------------
@@ -188,10 +466,15 @@ menuAnim();
    --------------------------- */
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
-function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
 resizeCanvas();
 
-let shipX = window.innerWidth/2 - 25;
+let shipX = window.innerWidth / 2 - 25;
 let shipY = canvas.height - 120;
 let shipSpeed = 8;
 let score = 0;
@@ -199,13 +482,14 @@ let meteors = [];
 let frames = 0;
 let isPaused = false;
 let isDead = false;
-let moveL = false, moveR = false;
+let moveL = false;
+let moveR = false;
 let animationId;
 const shipRadius = 30;
 
-function resetGame(){
+function resetGame() {
   resizeCanvas();
-  shipX = canvas.width/2 - 25;
+  shipX = canvas.width / 2 - 25;
   shipY = canvas.height - 120;
   shipSpeed = 8;
   score = 0;
@@ -218,56 +502,91 @@ function resetGame(){
 }
 
 /* Controls */
-function setupCtrl(id, side){
+function setupCtrl(id, side) {
   const el = document.getElementById(id);
-  el.addEventListener('touchstart', e=>{ e.preventDefault(); if(side==='L') moveL=true; else moveR=true; }, {passive: false});
-  el.addEventListener('touchend', e=>{ e.preventDefault(); if(side==='L') moveL=false; else moveR=false; }, {passive: false});
-  el.addEventListener('mousedown', e=>{ e.preventDefault(); if(side==='L') moveL=true; else moveR=true; });
-  el.addEventListener('mouseup', e=>{ e.preventDefault(); if(side==='L') moveL=false; else moveR=false; });
-  el.addEventListener('mouseleave', e=>{ e.preventDefault(); if(side==='L') moveL=false; else moveR=false; });
+  el.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (side === 'L') moveL = true;
+    else moveR = true;
+  }, { passive: false });
+  el.addEventListener('touchend', e => {
+    e.preventDefault();
+    if (side === 'L') moveL = false;
+    else moveR = false;
+  }, { passive: false });
+  el.addEventListener('mousedown', e => {
+    e.preventDefault();
+    if (side === 'L') moveL = true;
+    else moveR = true;
+  });
+  el.addEventListener('mouseup', e => {
+    e.preventDefault();
+    if (side === 'L') moveL = false;
+    else moveR = false;
+  });
+  el.addEventListener('mouseleave', e => {
+    e.preventDefault();
+    if (side === 'L') moveL = false;
+    else moveR = false;
+  });
 }
-setupCtrl('l-btn','L'); setupCtrl('r-btn','R');
 
-window.addEventListener('keydown', (e)=>{
-  if(e.key === 'ArrowLeft') moveL = true;
-  if(e.key === 'ArrowRight') moveR = true;
-  if(e.key === 'Escape') { if(document.getElementById('general-modal').style.display==='flex') hideGeneral(); else togglePause(); }
+setupCtrl('l-btn', 'L');
+setupCtrl('r-btn', 'R');
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') moveL = true;
+  if (e.key === 'ArrowRight') moveR = true;
+  if (e.key === 'Escape') {
+    if (document.getElementById('general-modal').style.display === 'flex') {
+      hideGeneral();
+    } else {
+      togglePause();
+    }
+  }
 });
-window.addEventListener('keyup', (e)=>{
-  if(e.key === 'ArrowLeft') moveL = false;
-  if(e.key === 'ArrowRight') moveR = false;
+
+window.addEventListener('keyup', (e) => {
+  if (e.key === 'ArrowLeft') moveL = false;
+  if (e.key === 'ArrowRight') moveR = false;
 });
 
 /* Spawn meteor: only random sizes, NO wobble, NO inner circles */
-function spawnMeteor(){
-  const r = Math.floor(Math.random() * 36) + 12; // radius 12 - 47
-  const x = Math.random() * (canvas.width - r*2);
-  // speed: smaller meteors are generally faster
-  const v = 3 + (40 / (r + 8)) + Math.min(4, score/60);
-  meteors.push({x: x, y: -r*2, v: v, r: r});
+function spawnMeteor() {
+  const r = Math.floor(Math.random() * 36) + 12;
+  const x = Math.random() * (canvas.width - r * 2);
+  const v = 3 + (40 / (r + 8)) + Math.min(4, score / 60);
+  meteors.push({ x: x, y: -r * 2, v: v, r: r });
 }
 
 /* Draw simple meteor (gradient) */
-function drawMeteor(m){
+function drawMeteor(m) {
   const cx = m.x + m.r;
   const cy = m.y + m.r;
-  const grad = ctx.createRadialGradient(cx - m.r*0.2, cy - m.r*0.2, m.r*0.1, cx, cy, m.r);
+  const grad = ctx.createRadialGradient(
+    cx - m.r * 0.2,
+    cy - m.r * 0.2,
+    m.r * 0.1,
+    cx,
+    cy,
+    m.r
+  );
   grad.addColorStop(0, '#d69b5d');
   grad.addColorStop(0.6, '#9a5e2e');
   grad.addColorStop(1, '#60381d');
 
   ctx.fillStyle = grad;
   ctx.beginPath();
-  ctx.arc(cx, cy, m.r, 0, Math.PI*2);
+  ctx.arc(cx, cy, m.r, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.lineWidth = Math.max(1, Math.round(m.r*0.06));
+  ctx.lineWidth = Math.max(1, Math.round(m.r * 0.06));
   ctx.strokeStyle = 'rgba(0,0,0,0.45)';
   ctx.stroke();
 }
 
 /* collision: simple circle vs ship */
-function checkCollision(m){
+function checkCollision(m) {
   const shipCX = shipX + 25;
   const shipCY = canvas.height - 95;
   const meteorCX = m.x + m.r;
@@ -277,42 +596,36 @@ function checkCollision(m){
 }
 
 /* Main loop (no horizontal wobble) */
-function gameLoop(){
-  if(isPaused || isDead || document.getElementById('game-screen').style.display === 'none') return;
+function gameLoop() {
+  if (isPaused || isDead || document.getElementById('game-screen').style.display === 'none') return;
 
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // small background star noise
   ctx.fillStyle = 'rgba(255,255,255,0.02)';
-  for(let s=0;s<2;s++){
-    ctx.fillRect((frames*0.2 + s*200) % canvas.width, (s*120) % canvas.height, 1, 1);
+  for (let s = 0; s < 2; s++) {
+    ctx.fillRect((frames * 0.2 + s * 200) % canvas.width, (s * 120) % canvas.height, 1, 1);
   }
 
-  // move ship
-  if(moveL && shipX > 0) shipX -= shipSpeed;
-  if(moveR && shipX < canvas.width - 50) shipX += shipSpeed;
+  if (moveL && shipX > 0) shipX -= shipSpeed;
+  if (moveR && shipX < canvas.width - 50) shipX += shipSpeed;
 
-  // draw ship
   ctx.fillStyle = '#00ffcc';
   ctx.beginPath();
-  ctx.moveTo(shipX+25, canvas.height-120);
-  ctx.lineTo(shipX, canvas.height-70);
-  ctx.lineTo(shipX+50, canvas.height-70);
+  ctx.moveTo(shipX + 25, canvas.height - 120);
+  ctx.lineTo(shipX, canvas.height - 70);
+  ctx.lineTo(shipX + 50, canvas.height - 70);
   ctx.closePath();
   ctx.fill();
 
-  // spawn meteors
-  const spawnRate = Math.max(8, 40 - Math.floor(score/6));
-  if(frames % spawnRate === 0) spawnMeteor();
+  const spawnRate = Math.max(8, 40 - Math.floor(score / 6));
+  if (frames % spawnRate === 0) spawnMeteor();
 
-  // update meteors
-  for(let i = meteors.length - 1; i >= 0; i--){
+  for (let i = meteors.length - 1; i >= 0; i--) {
     const m = meteors[i];
     m.y += m.v;
-
     drawMeteor(m);
 
-    if(checkCollision(m)){
+    if (checkCollision(m)) {
       isDead = true;
       gameMusic.pause();
       document.getElementById('overlay-title').innerText = 'MORISTE BOT';
@@ -321,8 +634,8 @@ function gameLoop(){
       document.getElementById('overlay-menu').style.display = 'flex';
     }
 
-    if(m.y - m.r > canvas.height + 60){
-      meteors.splice(i,1);
+    if (m.y - m.r > canvas.height + 60) {
+      meteors.splice(i, 1);
       score++;
       document.getElementById('score').innerText = score;
     }
@@ -333,10 +646,10 @@ function gameLoop(){
 }
 
 /* Transitions and controls (igual que antes) */
-function startToGame(){
+function startToGame() {
   const trans = document.getElementById('transition-layer');
   trans.style.opacity = '1';
-  setTimeout(()=>{
+  setTimeout(() => {
     document.getElementById('menu-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'flex';
     fadeAudio(menuMusic, gameMusic);
@@ -346,13 +659,13 @@ function startToGame(){
     isPaused = false;
     isDead = false;
     gameLoop();
-  },700);
+  }, 700);
 }
 
-function gameToMenu(){
+function gameToMenu() {
   const trans = document.getElementById('transition-layer');
   trans.style.opacity = '1';
-  setTimeout(()=>{
+  setTimeout(() => {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('menu-screen').style.display = 'flex';
     document.getElementById('overlay-menu').style.display = 'none';
@@ -361,56 +674,81 @@ function gameToMenu(){
     isDead = false;
     cancelAnimationFrame(animationId);
     trans.style.opacity = '0';
-  },700);
+  }, 700);
 }
 
-function togglePause(){
-  if(isDead) return;
+function togglePause() {
+  if (isDead) return;
   isPaused = !isPaused;
   document.getElementById('overlay-menu').style.display = isPaused ? 'flex' : 'none';
   document.getElementById('overlay-title').innerText = 'PAUSA';
   document.getElementById('overlay-title').style.color = '#00ffcc';
   document.getElementById('btn-resume').style.display = 'block';
-  if(isPaused) {
+
+  if (isPaused) {
     gameMusic.pause();
     cancelAnimationFrame(animationId);
   } else {
-    gameMusic.play().catch(()=>{});
+    gameMusic.play().catch(() => {});
     gameLoop();
   }
 }
 
-function restartGame(){
+function restartGame() {
   resetGame();
   isDead = false;
   isPaused = false;
   document.getElementById('overlay-menu').style.display = 'none';
   gameMusic.currentTime = 0;
-  gameMusic.play().catch(()=>{});
+  gameMusic.play().catch(() => {});
   cancelAnimationFrame(animationId);
   gameLoop();
 }
 
-window.addEventListener('resize', ()=>{
-  resizeCanvas(); resizeMenuStars();
-  shipX = Math.min(shipX, canvas.width-60);
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  resizeMenuStars();
+  shipX = Math.min(shipX, canvas.width - 60);
 });
 
 /* General modal */
-function showGeneral(){ document.getElementById('general-modal').style.display = 'flex'; menuMusic.pause(); }
-function hideGeneral(){ document.getElementById('general-modal').style.display = 'none'; try{ menuMusic.play(); }catch(e){} }
-function copyCreator(){
-  if(navigator.clipboard){
-    navigator.clipboard.writeText('PattitexTEC').then(()=> alert('Creado copiado: PattitexTEC')).catch(()=> alert('No se pudo copiar'));
-  } else alert('Portapapeles no disponible');
+function showGeneral() {
+  document.getElementById('general-modal').style.display = 'flex';
+  menuMusic.pause();
 }
-function openSocial(){ window.open('https://www.tiktok.com/@Doryan5B','_blank'); }
+
+function hideGeneral() {
+  document.getElementById('general-modal').style.display = 'none';
+  try {
+    menuMusic.play();
+  } catch (e) {}
+}
+
+function copyCreator() {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText('PattitexTEC')
+      .then(() => alert('Creado copiado: PattitexTEC'))
+      .catch(() => alert('No se pudo copiar'));
+  } else {
+    alert('Portapapeles no disponible');
+  }
+}
+
+function openSocial() {
+  window.open('https://www.tiktok.com/@Doryan5B', '_blank');
+}
 
 /* start states */
 document.getElementById('menu-screen').style.display = 'flex';
 document.getElementById('game-screen').style.display = 'none';
-document.addEventListener('click', ()=>{ menuMusic.play().catch(()=>{}); }, {once:true});
-document.addEventListener('touchstart', ()=>{ menuMusic.play().catch(()=>{}); }, {once:true});
+document.addEventListener('click', () => {
+  menuMusic.play().catch(() => {});
+}, { once: true });
+document.addEventListener('touchstart', () => {
+  menuMusic.play().catch(() => {});
+}, { once: true });
 </script>
+
 </body>
-</html>
+  </html>
+  
